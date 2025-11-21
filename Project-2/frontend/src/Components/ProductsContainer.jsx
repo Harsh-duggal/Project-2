@@ -6,14 +6,12 @@ export default function ProductsContainer({
   handleRemoveQuantity,
   handleAddToCart,
   handleOnDelete,
-  handleOnEdit,
   productQuantity,
 }) {
   return (
     <div className="ProductsContainer">
-      {contacts.map((product) => {
-     const qtyObj = productQuantity?.find((p) => p.id === product.id);
-        const qty = qtyObj?.quantity ?? 0;
+      {contacts.map(product => {
+    const qty = productQuantity.find(p => p.id === product.id)?.quantity || 0;
         return(
         <ProductCard
           key={product.id}
@@ -22,7 +20,6 @@ export default function ProductsContainer({
           handleRemoveQuantity={handleRemoveQuantity}
           handleAddToCart={handleAddToCart}
           handleOnDelete={handleOnDelete}
-          handleOnEdit={handleOnEdit}
           productQuantity={qty}
         />
         );

@@ -61,7 +61,7 @@ setFormData({
       console.log(response)
       const withId = response.data.map((p) => ({
       ...p,
-      id: p._id || p.id,
+      id:p._id,
     }));
   
 
