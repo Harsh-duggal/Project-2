@@ -19,19 +19,17 @@ export default function GroceriesAppContainer() {
 
   const [postResponse, setPostResponse] = useState("");
   //To handle the submission of data
-    const handleOnSubmit = async(e) =>{
-      e.preventDefault();
-      try{
-await axios.post("http://localhost:3000/Project-2", formData)
-setPostResponse(Date.now());//replace this
+
+    const handleOnSubmit = async(e) =>{ e.preventDefault();
+       try{ await axios.post("http://localhost:3000/Project-2", formData);
+setPostResponse(Date.now());
 setFormData({
   productName: "",
   brand: "",
   image: "",
   price: "",
 });
-      }
-      catch(error){
+      } catch(error){
         console.log(error.message);
       }
     };
@@ -45,12 +43,12 @@ setFormData({
   const handleOnDelete = async(productId) => {
     try{
       await axios.delete(`http://localhost:3000/Project-2/${productId}`);
-      setPostResponse(response.data.message);
+      setPostResponse(Date.now());
     }
     catch(error){
       console.log(error.message);
     }
-  }
+  };
 
   //UseEffects
   useEffect(()=>{
@@ -162,6 +160,7 @@ setFormData({
                     price={formData.price}
                     handleOnSubmit={handleOnSubmit}
                    handleOnChange={handleOnChange}/>
+                   <p>{postResponse}</p>
         <ProductsContainer
           contacts={products}
           handleAddQuantity={handleAddQuantity}

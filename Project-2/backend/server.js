@@ -40,7 +40,7 @@ catch(error){
     response.status(500).send({message: error.message})
 }
 });
-
+//To post a new contact to DB
 server.post("/Project-2", async(request, response) => {
 
     const {productName, brand, image, price} = request.body;
@@ -53,12 +53,13 @@ server.post("/Project-2", async(request, response) => {
     });
     try{
 await newContact.save();
-response.status(200).send({message:"Product is added"})
+response.status(200).send({message:`Product is successfully added ${crypto.randomUUID()}`})
     }
     catch(error){
         response.status(400).send({message: error.message})
     }
 });
+
 
 //TO delete a product from DB by id
 server.delete("/Project-2/:id", async(request, response) =>{
@@ -69,11 +70,16 @@ server.delete("/Project-2/:id", async(request, response) =>{
     }catch(error){
         response.status(400).send({message: error.message});
     }
+});
+
+//To get product by id
+server.get("/Project-2/:id", async(request, response) => {
+    const {id} = request.params;
+    try{
+const product = await contacts.findById(id);
+        response.send(product);
+    }
+    catch(error){
+        response.status(500).send({message:error.message});
+    }
 })
-
-
-
-
-
-
-

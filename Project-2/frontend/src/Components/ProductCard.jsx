@@ -31,7 +31,6 @@ export default function ProductCard({
         handleAddQuantity={handleAddQuantity}
         productQuantity={productQuantity}
         handleRemoveQuantity={handleRemoveQuantity}
-        handleOnDelete={handleOnDelete}
         id={id}
         mode="product"
       />
