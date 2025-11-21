@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ProductForm from "./productForm";
+import ProductForm from "./ProductForm";
 import CartContainer from "./CartContainer";
 import ProductsContainer from "./ProductsContainer";
 import NavBar from "./NavBar";
@@ -10,10 +10,52 @@ export default function GroceriesAppContainer() {
   const [productQuantity, setProductQuantity] = useState([]);
   const [products, setProducts] = useState([]);
   const [cartList, setCartList] = useState([]);
+  const [formData, setFormData] = useState({
+    productName: "",
+    brand: "",
+    image: "",
+    price: "",
+  });
+
+  const [postResponse, setPostResponse] = useState("");
+  //To handle the submission of data
+    const handleOnSubmit = async(e) =>{
+      e.preventDefault();
+      try{
+await axios.post("http://localhost:3000/Project-2", formData)
+setPostResponse(Date.now());//replace this
+setFormData({
+  productName: "",
+  brand: "",
+  image: "",
+  price: "",
+});
+      }
+      catch(error){
+        console.log(error.message);
+      }
+    };
+//To handle on Change event for the form
+    const handleOnChange = (e) => {
+    setFormData((prevData) => {
+        return {...prevData, [e.target.name]: e.target.value};
+    });
+  };
+
+  const handleOnDelete = async(productId) => {
+    try{
+      await axios.delete(`http://localhost:3000/Project-2/${productId}`);
+      setPostResponse(response.data.message);
+    }
+    catch(error){
+      console.log(error.message);
+    }
+  }
+
   //UseEffects
   useEffect(()=>{
     handleContactsDB();
-  }, []);
+  }, [postResponse]);
 
   const handleContactsDB = async () => {
     try{
@@ -24,6 +66,8 @@ export default function GroceriesAppContainer() {
       id: p._id || p.id,
     }));
   
+
+
     setProducts(withId);
     setProductQuantity(
       withId.map((p) => ({ id: p.id, quantity: 0 }))
@@ -111,14 +155,21 @@ export default function GroceriesAppContainer() {
     <div>
       <NavBar quantity={cartList.length} />
       <div className="GroceriesApp-Container">
+        <ProductForm 
+                    productName={formData.productName}
+                    brand={formData.brand}
+                    image={formData.image}
+                    price={formData.price}
+                    handleOnSubmit={handleOnSubmit}
+                   handleOnChange={handleOnChange}/>
         <ProductsContainer
           contacts={products}
           handleAddQuantity={handleAddQuantity}
           handleRemoveQuantity={handleRemoveQuantity}
           handleAddToCart={handleAddToCart}
+          handleOnDelete={handleOnDelete}
           productQuantity={productQuantity}
         />
-        <ProductForm refreshProducts={handleContactsDB}/>
         <CartContainer
           cartList={cartList}
           handleRemoveFromCart={handleRemoveFromCart}

@@ -5,6 +5,7 @@ export default function ProductsContainer({
   handleAddQuantity,
   handleRemoveQuantity,
   handleAddToCart,
+  handleOnDelete,
   productQuantity,
 }) {
   return (
@@ -19,8 +20,8 @@ export default function ProductsContainer({
           handleAddQuantity={handleAddQuantity}
           handleRemoveQuantity={handleRemoveQuantity}
           handleAddToCart={handleAddToCart}
+          handleOnDelete={handleOnDelete}
           productQuantity={qty}
-          
         />
         );
       })}

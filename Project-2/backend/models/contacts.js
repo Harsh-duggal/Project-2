@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const contactSchema = new Schema({
     id:{
         type: String,
-        required:true,
+        required:false,
     },
     productName:{
         type: String,

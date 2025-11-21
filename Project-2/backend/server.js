@@ -41,6 +41,35 @@ catch(error){
 }
 });
 
+server.post("/Project-2", async(request, response) => {
+
+    const {productName, brand, image, price} = request.body;
+    const newContact = new contacts({
+        productName,
+        brand,
+        image,
+        price,
+
+    });
+    try{
+await newContact.save();
+response.status(200).send({message:"Product is added"})
+    }
+    catch(error){
+        response.status(400).send({message: error.message})
+    }
+});
+
+//TO delete a product from DB by id
+server.delete("/Project-2/:id", async(request, response) =>{
+    const{id} = request.params;
+    try{
+    await contacts.findByIdAndDelete(id);
+    response.send({message:"Product is deleted"});
+    }catch(error){
+        response.status(400).send({message: error.message});
+    }
+})
 
 
 
